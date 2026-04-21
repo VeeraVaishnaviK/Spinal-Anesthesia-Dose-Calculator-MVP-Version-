@@ -7,14 +7,12 @@ import {
   ClipboardDocumentListIcon,
   ChartBarIcon,
   Cog6ToothIcon,
-  BookOpenIcon,
 } from '@heroicons/react/24/outline';
 import {
   CalculatorIcon as CalculatorSolid,
   ClipboardDocumentListIcon as ClipboardSolid,
   ChartBarIcon as ChartBarSolid,
   Cog6ToothIcon as CogSolid,
-  BookOpenIcon as BookSolid,
 } from '@heroicons/react/24/solid';
 
 const NAV_ITEMS = [
@@ -22,7 +20,6 @@ const NAV_ITEMS = [
   { id: 'caselog', label: 'Case Log', Icon: ClipboardDocumentListIcon, SolidIcon: ClipboardSolid },
   { id: 'graphs', label: 'Graphs', Icon: ChartBarIcon, SolidIcon: ChartBarSolid },
   { id: 'settings', label: 'Settings', Icon: Cog6ToothIcon, SolidIcon: CogSolid },
-  { id: 'about', label: 'About', Icon: BookOpenIcon, SolidIcon: BookSolid },
 ];
 
 export default function Navbar() {

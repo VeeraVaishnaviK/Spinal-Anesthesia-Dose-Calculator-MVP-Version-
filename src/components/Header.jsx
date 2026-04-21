@@ -1,9 +1,9 @@
 /**
- * Header — Top app bar with logo, wordmark, theme toggle, and about icon.
+ * Header — Top app bar with logo, wordmark, and theme toggle.
  */
 import ThemeToggle from './ThemeToggle';
 import { useApp } from '../context/AppContext';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
+
 
 export default function Header() {
   const { dispatch } = useApp();
@@ -70,25 +70,7 @@ export default function Header() {
       {/* Right actions */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <ThemeToggle />
-        <button
-          onClick={() => dispatch({ type: 'SET_VIEW', view: 'about' })}
-          aria-label="About and reference information"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            border: '1.5px solid var(--border)',
-            background: 'var(--surface)',
-            color: 'var(--text-secondary)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-          }}
-        >
-          <InformationCircleIcon style={{ width: 20, height: 20 }} />
-        </button>
+
       </div>
     </header>
   );

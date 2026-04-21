@@ -10,7 +10,7 @@ import Calculator from './views/Calculator';
 import CaseLog from './views/CaseLog';
 import GraphView from './views/GraphView';
 import Settings from './views/Settings';
-import About from './views/About';
+
 
 function AppContent() {
   const { state } = useApp();
@@ -26,8 +26,7 @@ function AppContent() {
         return <GraphView />;
       case 'settings':
         return <Settings />;
-      case 'about':
-        return <About />;
+
       default:
         return <Calculator />;
     }
