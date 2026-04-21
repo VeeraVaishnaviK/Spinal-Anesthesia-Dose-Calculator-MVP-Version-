@@ -141,10 +141,13 @@ export default function Calculator() {
   const handleSaveCase = () => {
     if (!calculatedResult) return;
 
-    const nextId = state.caseLog.length + 1;
+      const nextId = state.caseLog.length + 1;
     const caseEntry = {
       id: `SDC-${String(nextId).padStart(3, '0')}`,
-      name: '',
+      name: currentPatient.name,
+      pid: currentPatient.pid,
+      procedure: currentPatient.procedure,
+      region: currentPatient.region,
       age: currentPatient.includeAge ? currentPatient.age : null,
       sex: currentPatient.sex,
       heightCm: getHeightCm(),
@@ -190,26 +193,109 @@ export default function Calculator() {
     <div style={{ maxWidth: 560, margin: '0 auto' }}>
       {/* Input Card */}
       <section className="card" style={{ padding: 24, marginBottom: 16 }}>
-        <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--primary)', marginBottom: 20 }}>
-          Patient Parameters
+        <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)', marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Patient & Procedure Info
+        </h2>
+
+        {/* Name & PID Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>Patient Name</label>
+            <input
+              type="text"
+              className="input-field"
+              placeholder="Full Name"
+              value={currentPatient.name}
+              onChange={(e) => setField('name', e.target.value)}
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>PID / MRN</label>
+            <input
+              type="text"
+              className="input-field"
+              placeholder="ID Number"
+              value={currentPatient.pid}
+              onChange={(e) => setField('pid', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Age & Sex Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 12, marginBottom: 16 }}>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>Age (Years)</label>
+            <input
+              type="number"
+              className="input-field"
+              placeholder="40"
+              value={currentPatient.age}
+              onChange={(e) => setField('age', parseInt(e.target.value) || '')}
+              inputMode="numeric"
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>Sex</label>
+            <div className="segment-group" style={{ height: 42 }}>
+              {['male', 'female'].map((s) => (
+                <button
+                  key={s}
+                  className={`segment-btn${currentPatient.sex === s ? ' active' : ''}`}
+                  onClick={() => setField('sex', s)}
+                  style={{ fontSize: 12 }}
+                >
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Procedure & Region */}
+        <div style={{ marginBottom: 16 }}>
+          <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>Planned Procedure</label>
+          <input
+            type="text"
+            className="input-field"
+            placeholder="e.g. LSCS, Hernia, TKR"
+            value={currentPatient.procedure}
+            onChange={(e) => setField('procedure', e.target.value)}
+          />
+        </div>
+
+        <div style={{ marginBottom: 24 }}>
+          <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6 }}>Region / Zone of Paraesthesia</label>
+          <input
+            type="text"
+            className="input-field"
+            placeholder="Target block level"
+            value={currentPatient.region}
+            onChange={(e) => setField('region', e.target.value)}
+          />
+        </div>
+
+        <hr style={{ border: 'none', borderTop: '1px solid var(--border)', marginBottom: 24 }} />
+
+        <h2 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Physical Parameters (Required for Calc)
         </h2>
 
         {/* Height Input */}
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Height</label>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>Height</label>
             <div className="segment-group" style={{ width: 'auto' }}>
               <button
                 className={`segment-btn${currentPatient.heightUnit === 'cm' ? ' active' : ''}`}
                 onClick={() => setField('heightUnit', 'cm')}
-                style={{ padding: '4px 12px', minHeight: 32, fontSize: 12 }}
+                style={{ padding: '4px 12px', minHeight: 32, fontSize: 11 }}
               >
                 cm
               </button>
               <button
                 className={`segment-btn${currentPatient.heightUnit === 'ftin' ? ' active' : ''}`}
                 onClick={() => setField('heightUnit', 'ftin')}
-                style={{ padding: '4px 12px', minHeight: 32, fontSize: 12 }}
+                style={{ padding: '4px 12px', minHeight: 32, fontSize: 11 }}
               >
                 ft+in
               </button>
@@ -225,7 +311,6 @@ export default function Calculator() {
                 value={currentPatient.height}
                 onChange={(e) => setField('height', e.target.value)}
                 aria-label="Height in centimeters"
-                aria-describedby={errors.height ? 'height-error' : undefined}
                 inputMode="decimal"
               />
               <span
@@ -264,7 +349,7 @@ export default function Calculator() {
             </div>
           )}
           {errors.height && (
-            <p id="height-error" style={{ fontSize: 12, color: 'var(--danger)', marginTop: 4, fontWeight: 500 }}>
+            <p id="height-error" style={{ fontSize: 11, color: 'var(--danger)', marginTop: 4, fontWeight: 500 }}>
               {errors.height}
             </p>
           )}
@@ -273,19 +358,19 @@ export default function Calculator() {
         {/* Weight Input */}
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Weight</label>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>Weight</label>
             <div className="segment-group" style={{ width: 'auto' }}>
               <button
                 className={`segment-btn${currentPatient.weightUnit === 'kg' ? ' active' : ''}`}
                 onClick={() => setField('weightUnit', 'kg')}
-                style={{ padding: '4px 12px', minHeight: 32, fontSize: 12 }}
+                style={{ padding: '4px 12px', minHeight: 32, fontSize: 11 }}
               >
                 kg
               </button>
               <button
                 className={`segment-btn${currentPatient.weightUnit === 'lbs' ? ' active' : ''}`}
                 onClick={() => setField('weightUnit', 'lbs')}
-                style={{ padding: '4px 12px', minHeight: 32, fontSize: 12 }}
+                style={{ padding: '4px 12px', minHeight: 32, fontSize: 11 }}
               >
                 lbs
               </button>
@@ -300,7 +385,6 @@ export default function Calculator() {
               value={currentPatient.weight}
               onChange={(e) => setField('weight', e.target.value)}
               aria-label={`Weight in ${currentPatient.weightUnit}`}
-              aria-describedby={errors.weight ? 'weight-error' : undefined}
               inputMode="decimal"
             />
             <span
@@ -311,175 +395,60 @@ export default function Calculator() {
             </span>
           </div>
           {errors.weight && (
-            <p id="weight-error" style={{ fontSize: 12, color: 'var(--danger)', marginTop: 4, fontWeight: 500 }}>
+            <p id="weight-error" style={{ fontSize: 11, color: 'var(--danger)', marginTop: 4, fontWeight: 500 }}>
               {errors.weight}
             </p>
           )}
         </div>
 
-        {/* BMI (auto) */}
-        <div style={{ marginBottom: 16 }}>
-          <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6, display: 'block' }}>
-            BMI (auto)
-          </label>
+        {/* BMI & Constant Row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>BMI:</label>
             {bmiDisplay ? (
-              <>
-                <span
-                  className={`badge badge-${bmiDisplay.category.color}`}
-                  style={{ fontSize: 14, fontWeight: 700, padding: '6px 16px', transition: 'all 0.2s ease' }}
-                >
-                  {bmiDisplay.value}
-                </span>
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>
-                  {bmiDisplay.category.label}
-                </span>
-              </>
-            ) : (
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-                Enter height & weight
+              <span className={`badge badge-${bmiDisplay.category.color}`} style={{ fontWeight: 700 }}>
+                {bmiDisplay.value}
               </span>
+            ) : (
+              <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontStyle: 'italic' }}>--</span>
             )}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>Constant (C):</label>
+            <div className="segment-group" style={{ width: 'auto' }}>
+              {[8, 9, 10].map((c) => (
+                <button
+                  key={c}
+                  className={`segment-btn${currentPatient.constant === c ? ' active' : ''}`}
+                  onClick={() => setField('constant', c)}
+                  style={{ padding: '4px 10px', minHeight: 32, fontSize: 11 }}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Age (optional, collapsed by default) */}
-        <div style={{ marginBottom: 16 }}>
+        {/* Pregnancy toggle (only for female) */}
+        {currentPatient.sex === 'female' && (
           <div
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}
-            onClick={() => setField('includeAge', !currentPatient.includeAge)}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 20, padding: '12px', background: 'var(--result-bg)', borderRadius: '12px', cursor: 'pointer' }}
+            onClick={() => setField('pregnant', !currentPatient.pregnant)}
           >
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
-              Include Age Adjustment
-            </label>
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--primary)' }}>
+              🤰 Pregnancy adjustment (-15%)
+            </span>
             <div
-              className={`toggle-track${currentPatient.includeAge ? ' active' : ''}`}
+              className={`toggle-track${currentPatient.pregnant ? ' active' : ''}`}
               role="switch"
-              aria-checked={currentPatient.includeAge}
-              aria-label="Include age adjustment toggle"
+              aria-checked={currentPatient.pregnant}
             >
               <div className="toggle-thumb" />
             </div>
           </div>
-
-          <div className={`collapsible-content${currentPatient.includeAge ? ' open' : ''}`}>
-            <div style={{ paddingTop: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Age</span>
-                <span
-                  className="badge badge-pink"
-                  style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 14 }}
-                >
-                  {currentPatient.age} years
-                </span>
-              </div>
-              <input
-                type="range"
-                min="18"
-                max="90"
-                value={currentPatient.age}
-                onChange={(e) => setField('age', parseInt(e.target.value))}
-                aria-label="Patient age"
-                style={{ width: '100%' }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-secondary)' }}>
-                <span>18</span>
-                <span>90</span>
-              </div>
-              {currentPatient.age > 65 && (
-                <p style={{ fontSize: 12, color: 'var(--primary)', fontWeight: 500, marginTop: 6 }}>
-                  ℹ️ Age &gt;65 — 10% dose reduction will be applied
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Sex */}
-        <div style={{ marginBottom: 16 }}>
-          <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 6, display: 'block' }}>
-            Sex
-          </label>
-          <div className="segment-group">
-            {['male', 'female', 'unspecified'].map((s) => (
-              <button
-                key={s}
-                className={`segment-btn${currentPatient.sex === s ? ' active' : ''}`}
-                onClick={() => {
-                  setField('sex', s);
-                  if (s !== 'female') setField('pregnant', false);
-                }}
-              >
-                {s === 'unspecified' ? 'Not specified' : s.charAt(0).toUpperCase() + s.slice(1)}
-              </button>
-            ))}
-          </div>
-
-          {/* Pregnancy toggle (only for female) */}
-          {currentPatient.sex === 'female' && (
-            <div
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, cursor: 'pointer' }}
-              onClick={() => setField('pregnant', !currentPatient.pregnant)}
-            >
-              <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>
-                🤰 Pregnancy adjustment
-              </span>
-              <div
-                className={`toggle-track${currentPatient.pregnant ? ' active' : ''}`}
-                role="switch"
-                aria-checked={currentPatient.pregnant}
-                aria-label="Pregnancy adjustment toggle"
-              >
-                <div className="toggle-thumb" />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Constant Selector (collapsible) */}
-        <div style={{ marginBottom: 4 }}>
-          <button
-            onClick={() => setShowConstant(!showConstant)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-              background: 'none',
-              border: 'none',
-              color: 'var(--text-secondary)',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: 'pointer',
-              padding: 0,
-            }}
-          >
-            Adjust Formula Constant
-            {showConstant ? (
-              <ChevronUpIcon style={{ width: 16, height: 16 }} />
-            ) : (
-              <ChevronDownIcon style={{ width: 16, height: 16 }} />
-            )}
-          </button>
-
-          <div className={`collapsible-content${showConstant ? ' open' : ''}`}>
-            <div style={{ paddingTop: 12 }}>
-              <div className="segment-group">
-                {[8, 9, 10].map((c) => (
-                  <button
-                    key={c}
-                    className={`segment-btn${currentPatient.constant === c ? ' active' : ''}`}
-                    onClick={() => setField('constant', c)}
-                  >
-                    C = {c}
-                  </button>
-                ))}
-              </div>
-              <p style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 8, lineHeight: 1.5 }}>
-                C=8 for taller patients, C=9 standard (default), C=10 for shorter stature
-              </p>
-            </div>
-          </div>
-        </div>
+        )}
       </section>
 
       {/* Calculate Button */}

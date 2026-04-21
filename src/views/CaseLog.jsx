@@ -29,7 +29,9 @@ export default function CaseLog() {
       cases = cases.filter(
         (c) =>
           c.id.toLowerCase().includes(q) ||
-          (c.name && c.name.toLowerCase().includes(q))
+          (c.name && c.name.toLowerCase().includes(q)) ||
+          (c.pid && c.pid.toLowerCase().includes(q)) ||
+          (c.procedure && c.procedure.toLowerCase().includes(q))
       );
     }
 
@@ -61,7 +63,7 @@ export default function CaseLog() {
     }
 
     const headers = [
-      'ID', 'Name', 'Age', 'Sex', 'Height(cm)', 'Weight(kg)', 'BMI',
+      'ID', 'Name', 'PID', 'Procedure', 'Region', 'Age', 'Sex', 'Height(cm)', 'Weight(kg)', 'BMI',
       'Constant', 'Dose(mL)', 'BlockLevel', 'AgeAdj', 'PregnancyAdj',
       'Timestamp', 'SafetyFlag',
     ];
@@ -69,6 +71,9 @@ export default function CaseLog() {
     const rows = caseLog.map((c) => [
       c.id,
       c.name || '',
+      c.pid || '',
+      c.procedure || '',
+      c.region || '',
       c.age || '',
       c.sex,
       Math.round(c.heightCm),
@@ -193,19 +198,31 @@ export default function CaseLog() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                     <span
                       style={{
-                        fontFamily: "'JetBrains Mono', monospace",
                         fontWeight: 700,
-                        fontSize: 14,
-                        color: 'var(--primary)',
+                        fontSize: 15,
+                        color: 'var(--text-primary)',
                       }}
                     >
-                      #{c.id}
+                      {c.name || 'Anonymous'}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontWeight: 600,
+                        fontSize: 12,
+                        color: 'var(--primary)',
+                        background: 'var(--result-bg)',
+                        padding: '2px 6px',
+                        borderRadius: 4
+                      }}
+                    >
+                      {c.pid || c.id}
                     </span>
                     <span className={`badge ${getSafetyBadgeClass(c.safety)}`}>
                       {c.safety?.label || 'Safe'}
                     </span>
                   </div>
-                  <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{formatDate(c.timestamp)}</p>
+                  <p style={{ fontSize: 11, color: 'var(--text-secondary)' }}>{formatDate(c.timestamp)}</p>
                 </div>
                 <div style={{ display: 'flex', gap: 4 }}>
                   <button
@@ -242,6 +259,8 @@ export default function CaseLog() {
               {expandedCase === c.id && (
                 <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--border)' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, fontSize: 13 }}>
+                    <div><span style={{ color: 'var(--text-secondary)' }}>Procedure:</span> {c.procedure || '--'}</div>
+                    <div><span style={{ color: 'var(--text-secondary)' }}>Target Region:</span> {c.region || '--'}</div>
                     <div><span style={{ color: 'var(--text-secondary)' }}>Block Level:</span> {c.blockLevel}</div>
                     <div><span style={{ color: 'var(--text-secondary)' }}>Raw Dose:</span> {c.rawDose} mL</div>
                     <div><span style={{ color: 'var(--text-secondary)' }}>Pregnant:</span> {c.isPregnant ? 'Yes' : 'No'}</div>

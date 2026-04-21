@@ -11,7 +11,7 @@ const AppContext = createContext(null);
 const defaultSettings = {
   theme: 'light',
   units: 'metric',        // 'metric' | 'imperial'
-  defaultConstant: 9,
+  defaultConstant: 8,
   dosingBasis: 'tbw',     // 'tbw' | 'lbw'
   drugConcentration: '0.5heavy', // '0.5heavy' | '0.5plain' | '0.75'
   autoElderlyReduction: true,
@@ -26,6 +26,10 @@ const defaultSettings = {
 };
 
 const defaultPatient = {
+  name: '',
+  pid: '',
+  procedure: '',
+  region: '',
   height: '',
   weight: '',
   heightUnit: 'cm',
@@ -33,10 +37,10 @@ const defaultPatient = {
   heightFeet: '',
   heightInches: '',
   age: 40,
-  includeAge: false,
+  includeAge: true,
   sex: 'unspecified',
   pregnant: false,
-  constant: 9,
+  constant: 8,
   useLBW: false,
 };
 

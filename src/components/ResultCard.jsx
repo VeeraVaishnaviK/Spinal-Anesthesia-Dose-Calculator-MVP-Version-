@@ -91,6 +91,20 @@ export default function ResultCard({ result, onSave, onRecalculate }) {
         position: 'relative',
         zIndex: 1
       }}>
+        {/* Patient Identity */}
+        {(state.currentPatient.name || state.currentPatient.pid) && (
+          <div style={{ marginBottom: 16, pb: 16, borderBottom: '1px solid rgba(216, 27, 96, 0.1)' }}>
+            <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>
+              {state.currentPatient.name || 'Anonymous Patient'}
+            </p>
+            {state.currentPatient.pid && (
+              <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
+                PID: {state.currentPatient.pid}
+              </p>
+            )}
+          </div>
+        )}
+
         <p style={{
           fontSize: 13,
           fontWeight: 700,
