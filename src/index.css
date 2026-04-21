@@ -6,42 +6,43 @@
 
 /* ---------- CSS Custom Properties ---------- */
 :root {
-  /* Light Theme (default — clinical white) */
-  --bg: #F8FAFC;
+  /* Light Theme — Professional Rose Palette */
+  --bg: #FFF9FA;           /* Extremely subtle pink-tinted white */
   --surface: #FFFFFF;
-  --primary: #1A56DB;
-  --primary-hover: #1648b8;
+  --primary: #D81B60;      /* Professional Rose Pink */
+  --primary-hover: #AD1457;
   --secondary: #0E9F6E;
   --danger: #E02424;
   --warning: #D97706;
-  --text-primary: #111928;
+  --text-primary: #2D1E22; /* Warm dark gray/charcoal */
   --text-secondary: #6B7280;
-  --border: #E5E7EB;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
-  --result-bg: #EFF6FF;
-  --result-border: #BFDBFE;
-  --gauge-bg: #E5E7EB;
-  --input-bg: #F9FAFB;
-  --toast-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  --border: #F4E7EB;       /* Soft pinkish-gray border */
+  --card-shadow: 0 4px 12px rgba(216, 27, 96, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --result-bg: #FDF2F8;    /* Very light pink focus */
+  --result-border: #FBCFE8;
+  --gauge-bg: #F1F5F9;
+  --input-bg: #FFFFFF;
+  --toast-shadow: 0 12px 48px rgba(216, 27, 96, 0.12);
 }
 
 .dark {
-  --bg: #0F172A;
-  --surface: #1E293B;
-  --primary: #3B82F6;
-  --primary-hover: #2563EB;
+  /* Dark Theme — Professional Magenta/Rose Palette */
+  --bg: #1A0A0F;           /* Deep dark berry background */
+  --surface: #2D1219;
+  --primary: #EC4899;      /* More vibrant pink for dark mode contrast */
+  --primary-hover: #F472B6;
   --secondary: #10B981;
   --danger: #EF4444;
   --warning: #F59E0B;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --border: #334155;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
-  --result-bg: #1E3A5F;
-  --result-border: #1E40AF;
-  --gauge-bg: #334155;
-  --input-bg: #0F172A;
-  --toast-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --text-primary: #FEE2E2; /* Soft warm white */
+  --text-secondary: #9CA3AF;
+  --border: #4D222E;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --result-bg: #4D1A25;
+  --result-border: #831843;
+  --gauge-bg: #4D222E;
+  --input-bg: #1A0A0F;
+  --toast-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
 }
 
 /* ---------- Base Resets ---------- */
@@ -316,13 +317,13 @@ input[type="number"] {
   color: #F87171;
 }
 
-.badge-blue {
-  background: rgba(59, 130, 246, 0.12);
-  color: #1D4ED8;
+.badge-pink {
+  background: rgba(216, 27, 96, 0.1);
+  color: #D81B60;
 }
-.dark .badge-blue {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60A5FA;
+.dark .badge-pink {
+  background: rgba(236, 72, 153, 0.2);
+  color: #F472B6;
 }
 
 .badge-purple {

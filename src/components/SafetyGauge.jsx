@@ -73,7 +73,7 @@ export default function SafetyGauge({ dose }) {
       </div>
 
       {/* Pointer */}
-      <div style={{ position: 'relative', height: 20, marginTop: 2 }}>
+      <div style={{ position: 'relative', height: 24, marginTop: 4 }}>
         <div
           className="gauge-pointer"
           style={{
@@ -82,9 +82,18 @@ export default function SafetyGauge({ dose }) {
             top: 0,
             transition: 'left 0.5s ease',
             transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <svg width="16" height="12" viewBox="0 0 16 12" fill={currentZone.color}>
+          <div style={{
+            width: 2,
+            height: 8,
+            background: 'var(--primary)',
+            boxShadow: '0 0 4px var(--primary)',
+          }} />
+          <svg width="12" height="12" viewBox="0 0 16 12" fill="var(--primary)">
             <polygon points="8,0 16,12 0,12" />
           </svg>
         </div>
@@ -98,7 +107,7 @@ export default function SafetyGauge({ dose }) {
           marginTop: 4,
         }}
       >
-        <span className={`badge badge-${currentZone.color === '#10B981' ? 'green' : currentZone.color === '#F59E0B' ? 'amber' : currentZone.color === '#EF4444' ? 'red' : 'blue'}`}>
+        <span className={`badge badge-${currentZone.color === '#10B981' ? 'green' : currentZone.color === '#F59E0B' ? 'amber' : currentZone.color === '#EF4444' ? 'red' : 'pink'}`}>
           {currentZone.color === '#10B981' ? '🟢' : currentZone.color === '#F59E0B' ? '🟡' : currentZone.color === '#EF4444' ? '🔴' : '⚪'}{' '}
           {currentZone.label}
         </span>

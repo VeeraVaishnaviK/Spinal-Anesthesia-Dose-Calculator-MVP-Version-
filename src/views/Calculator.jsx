@@ -229,7 +229,7 @@ export default function Calculator() {
                 inputMode="decimal"
               />
               <span
-                className="badge badge-blue"
+                className="badge badge-pink"
                 style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}
               >
                 cm
@@ -247,7 +247,7 @@ export default function Calculator() {
                   aria-label="Height in feet"
                   inputMode="numeric"
                 />
-                <span className="badge badge-blue" style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}>ft</span>
+                <span className="badge badge-pink" style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}>ft</span>
               </div>
               <div style={{ position: 'relative', flex: 1 }}>
                 <input
@@ -259,7 +259,7 @@ export default function Calculator() {
                   aria-label="Height in inches"
                   inputMode="numeric"
                 />
-                <span className="badge badge-blue" style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}>in</span>
+                <span className="badge badge-pink" style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}>in</span>
               </div>
             </div>
           )}
@@ -304,7 +304,7 @@ export default function Calculator() {
               inputMode="decimal"
             />
             <span
-              className="badge badge-blue"
+              className="badge badge-pink"
               style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}
             >
               {currentPatient.weightUnit}
@@ -367,7 +367,7 @@ export default function Calculator() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                 <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Age</span>
                 <span
-                  className="badge badge-blue"
+                  className="badge badge-pink"
                   style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 14 }}
                 >
                   {currentPatient.age} years

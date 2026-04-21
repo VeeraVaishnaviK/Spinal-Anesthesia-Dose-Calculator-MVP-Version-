@@ -28,28 +28,29 @@ export default function Header() {
         {/* Medical cross icon */}
         <div
           style={{
-            width: 36,
-            height: 36,
-            borderRadius: 10,
+            width: 38,
+            height: 38,
+            borderRadius: 12,
             background: 'var(--primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
+            boxShadow: '0 4px 12px rgba(216, 27, 96, 0.25)',
           }}
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
             <path d="M8 2h4v6h6v4h-6v6H8v-6H2V8h6V2z" fill="#FFFFFF" />
           </svg>
         </div>
         <div>
           <h1
             style={{
-              fontSize: 18,
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
+              fontSize: 19,
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
               color: 'var(--text-primary)',
-              lineHeight: 1.2,
+              lineHeight: 1.1,
             }}
           >
             SpinalDose AI
@@ -57,9 +58,11 @@ export default function Header() {
           <p
             style={{
               fontSize: 11,
-              color: 'var(--text-secondary)',
-              fontWeight: 500,
-              letterSpacing: '0.02em',
+              color: 'var(--primary)',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              marginTop: 1,
             }}
           >
             Dosage Calculator

@@ -57,28 +57,62 @@ export default function ResultCard({ result, onSave, onRecalculate }) {
     <div
       className="result-slide-in"
       style={{
-        background: 'var(--result-bg)',
-        border: '1px solid var(--result-border)',
-        borderRadius: 16,
+        background: 'var(--surface)',
+        border: `1.5px solid var(--border)`,
+        borderRadius: 20,
         padding: 24,
         marginTop: 16,
-        transition: 'background-color 0.3s ease',
+        boxShadow: '0 8px 32px rgba(216, 27, 96, 0.04)',
+        transition: 'all 0.3s ease',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      {/* Subtle decorative background element */}
+      <div style={{
+        position: 'absolute',
+        top: -60,
+        right: -60,
+        width: 140,
+        height: 140,
+        borderRadius: '50%',
+        background: 'linear-gradient(135deg, rgba(216, 27, 96, 0.03) 0%, rgba(216, 27, 96, 0) 100%)',
+        zIndex: 0
+      }} />
+
       {/* Main Output */}
-      <div style={{ textAlign: 'center', marginBottom: 20 }}>
-        <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', marginBottom: 4 }}>
-          Recommended Bupivacaine Dose
+      <div style={{
+        textAlign: 'center',
+        marginBottom: 24,
+        padding: 24,
+        background: 'var(--result-bg)',
+        borderRadius: 20,
+        border: '1.5px solid var(--result-border)',
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <p style={{
+          fontSize: 13,
+          fontWeight: 700,
+          color: 'var(--primary)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          marginBottom: 8
+        }}>
+          Recommended Dose
         </p>
-        <p className="dose-value" style={{ color: 'var(--primary)', marginBottom: 4 }}>
-          {adjustedDose} mL
-        </p>
-        <p style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 500, marginBottom: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center' }}>
+          <span className="dose-value" style={{ color: 'var(--primary)', fontSize: 48, fontWeight: 800 }}>{adjustedDose}</span>
+          <span style={{ fontSize: 22, fontWeight: 700, color: 'var(--primary)', marginLeft: 6 }}>mL</span>
+        </div>
+        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, fontWeight: 500 }}>
           Bupivacaine 0.5% Heavy
         </p>
-        <span className={`badge badge-${bmiCategory.color}`}>
-          BMI {bmi} — {bmiCategory.label}
-        </span>
+        <div style={{ marginTop: 12 }}>
+          <span className={`badge badge-${bmiCategory.color}`} style={{ padding: '6px 12px' }}>
+            BMI {bmi} — {bmiCategory.label}
+          </span>
+        </div>
       </div>
 
       {/* Safety Gauge */}

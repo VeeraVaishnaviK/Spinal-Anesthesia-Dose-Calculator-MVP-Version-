@@ -115,7 +115,7 @@ export default function CaseLog() {
       case 'green': return 'badge-green';
       case 'amber': return 'badge-amber';
       case 'red': return 'badge-red';
-      default: return 'badge-blue';
+      default: return 'badge-pink';
     }
   };
 

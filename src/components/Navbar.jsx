@@ -54,44 +54,50 @@ export default function Navbar() {
           <div
             style={{
               width: 36,
-              height: 36,
-              borderRadius: 10,
-              background: 'var(--primary)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M8 2h4v6h6v4h-6v6H8v-6H2V8h6V2z" fill="#FFFFFF" />
-            </svg>
-          </div>
-          {!sidebarCollapsed && (
-            <span style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-primary)' }}>
-              SpinalDose AI
-            </span>
-          )}
+            height: 36,
+            borderRadius: 12,
+            background: 'var(--primary)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            boxShadow: '0 4px 12px rgba(216, 27, 96, 0.25)',
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M8 2h4v6h6v4h-6v6H8v-6H2V8h6V2z" fill="#FFFFFF" />
+          </svg>
         </div>
+        {!sidebarCollapsed && (
+          <span style={{ fontWeight: 800, fontSize: 17, color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>
+            SpinalDose AI
+          </span>
+        )}
+      </div>
 
-        <div style={{ flex: 1 }}>
-          {NAV_ITEMS.map(({ id, label, Icon, SolidIcon }) => {
-            const isActive = activeView === id;
-            const IconComp = isActive ? SolidIcon : Icon;
-            return (
-              <button
-                key={id}
-                className={`sidebar-item${isActive ? ' active' : ''}`}
-                onClick={() => navigate(id)}
-                aria-label={label}
-                style={sidebarCollapsed ? { justifyContent: 'center', paddingLeft: 0, paddingRight: 0 } : {}}
-              >
-                <IconComp style={{ width: 22, height: 22, flexShrink: 0 }} />
-                {!sidebarCollapsed && <span>{label}</span>}
-              </button>
-            );
-          })}
-        </div>
+      <div style={{ flex: 1, padding: '0 8px' }}>
+        {NAV_ITEMS.map(({ id, label, Icon, SolidIcon }) => {
+          const isActive = activeView === id;
+          const IconComp = isActive ? SolidIcon : Icon;
+          return (
+            <button
+              key={id}
+              className={`sidebar-item${isActive ? ' active' : ''}`}
+              onClick={() => navigate(id)}
+              aria-label={label}
+              style={{
+                borderRadius: 12,
+                marginBottom: 4,
+                ...(sidebarCollapsed ? { justifyContent: 'center', paddingLeft: 0, paddingRight: 0 } : {}),
+                ...(isActive ? { background: 'rgba(216, 27, 96, 0.08)', color: 'var(--primary)' } : {}),
+              }}
+            >
+              <IconComp style={{ width: 22, height: 22, flexShrink: 0, color: isActive ? 'var(--primary)' : 'var(--text-secondary)' }} />
+              {!sidebarCollapsed && <span style={{ fontWeight: isActive ? 600 : 500 }}>{label}</span>}
+            </button>
+          );
+        })}
+      </div>
 
         {/* Collapse toggle */}
         <button
@@ -138,9 +144,12 @@ export default function Navbar() {
               className={`nav-item${isActive ? ' active' : ''}`}
               onClick={() => navigate(id)}
               aria-label={label}
+              style={{
+                color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
+              }}
             >
               <IconComp style={{ width: 22, height: 22 }} />
-              <span>{label}</span>
+              <span style={{ fontWeight: isActive ? 600 : 500 }}>{label}</span>
             </button>
           );
         })}
